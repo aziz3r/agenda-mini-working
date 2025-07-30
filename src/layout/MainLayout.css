@@ -1,0 +1,23 @@
+/* src/layout/MainLayout.css */
+
+.main-layout {
+  display: flex;
+  height: 100vh;
+  overflow: hidden;
+}
+
+.main-content {
+  flex: 1; /* Le calendrier prend toute la largeur restante */
+  transition: all 0.3s ease;
+  padding-right: 10px;
+  overflow-x: auto;
+}
+
+.sidebar {
+  width: 280px; /* Largeur fixe de la sidebar */
+  background-color: #f9f1e8;
+  padding: 16px;
+  border-left: 2px dashed #ccc;
+  box-shadow: -3px 0 5px rgba(0, 0, 0, 0.05);
+  overflow-y: auto;
+}

@@ -1,19 +1,45 @@
 import { Routes, Route } from 'react-router-dom';
 import Examens from '../pages/Examens/Examens';
-import Home from '../pages/Dashboard/Dashboard';
-import EditExamen from '../pages/EditExamen';
-
 import AddExamen from '../pages/AddExamen/AddExamen';
+import EditExamen from '../pages/EditExamen';
 import Dashboard from '../pages/Dashboard/Dashboard';
+import MainLayout from '../layout/MainLayout'; // ✅ nouveau layout
 
 function AppRoutes() {
   return (
     <Routes>
-      <Route path="/" element={<Dashboard />} />
-      <Route path="/examens" element={<Examens />} />
-      <Route path="/ajouter" element={<AddExamen />} /> {/* 👈 ici */}
-      <Route path="/modifier" element={<EditExamen />} />
-
+      <Route
+        path="/"
+        element={
+          <MainLayout>
+            <Dashboard />
+          </MainLayout>
+        }
+      />
+      <Route
+        path="/examens"
+        element={
+          <MainLayout>
+            <Examens />
+          </MainLayout>
+        }
+      />
+      <Route
+        path="/ajouter"
+        element={
+          <MainLayout>
+            <AddExamen />
+          </MainLayout>
+        }
+      />
+      <Route
+        path="/modifier"
+        element={
+          <MainLayout>
+            <EditExamen />
+          </MainLayout>
+        }
+      />
     </Routes>
   );
 }
