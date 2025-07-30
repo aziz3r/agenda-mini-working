@@ -11,7 +11,8 @@ function AppRoutes() {
       <Route path="/" element={<Home />} />
       <Route path="/examens" element={<Examens />} />
       <Route path="/ajouter" element={<AddExamen />} /> {/* 👈 ici */}
-      <Route path="/modifier/:id" element={<EditExamen />} />
+      <Route path="/modifier" element={<EditExamen />} />
+
     </Routes>
   );
 }

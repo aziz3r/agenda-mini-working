@@ -1,60 +1,97 @@
 import { useState, useEffect } from 'react';
-import { useParams, useNavigate } from 'react-router-dom';
+import { useNavigate } from 'react-router-dom';
 import axios from 'axios';
 
 const EditExamen = () => {
-  const { id } = useParams<{ id: string }>();
   const navigate = useNavigate();
 
+  const [idexam, setIdexam] = useState('');
   const [nom, setNom] = useState('');
   const [date, setDate] = useState('');
   const [poids, setPoids] = useState('');
-  const [idexam, setIdexam] = useState('');
   const [error, setError] = useState<string | null>(null);
 
-useEffect(() => {
-  if (!id || isNaN(Number(id)) || Number(id) <= 0) {
-    setError("❌ ID invalide, redirection en cours...");
-    navigate('/examens'); // 🔁 Redirection vers la liste
-    return;
-  }
+  // 🔁 Charger les données actuelles de l'examen à modifier
+  useEffect(() => {
+    const reference = localStorage.getItem("currentDocumentId");
+    if (!reference) {
+      setError("❌ Référence absente.");
+      return;
+    }
 
-  console.log("Fetching examen id:", id);
-  axios.get(`http://localhost:1337/api/exams/${id}`)
-    .then((res) => {
-      const data = res.data?.data;
-      if (data) {
-        setIdexam(data.idexam ?? '');
-        setNom(data.nom ?? '');
-        setDate(data.date ?? '');
-        setPoids(data.poids?.toString() ?? '');
-      } else {
-        setError("Examen non trouvé.");
-      }
-    })
-    .catch((err) => {
-      console.error("Erreur Axios :", err);
-      setError("Erreur lors du chargement de l'examen.");
-    });
-}, [id]);
+    axios
+      .get(`http://localhost:1337/api/exams?filters[examReference][$eq]=${reference}`)
+      .then((res) => {
+        const data = res.data.data;
+        if (!data || data.length === 0) {
+          setError("❌ Aucun examen trouvé.");
+          return;
+        }
 
+        // On prend ici le plus ancien
+        const examToEdit = data.sort(
+          (a: any, b: any) =>
+            new Date(a.createdAt).getTime() - new Date(b.createdAt).getTime()
+        )[0];
+
+        setIdexam(examToEdit.idexam || '');
+        setNom(examToEdit.nom || '');
+        setDate(examToEdit.date || '');
+        setPoids(examToEdit.poids?.toString() || '');
+      })
+      .catch((err) => {
+        console.error("❌ Erreur API :", err);
+        setError("❌ Chargement échoué.");
+      });
+  }, []);
 
   const handleSubmit = async (e: React.FormEvent) => {
     e.preventDefault();
+
+    const reference = localStorage.getItem("currentDocumentId");
+    if (!reference) {
+      setError("❌ Référence manquante.");
+      return;
+    }
+
     try {
-      await axios.put(`http://localhost:1337/api/exams/${id}`, {
+      // 1. Créer le nouvel examen modifié
+      const creationRes = await axios.post('http://localhost:1337/api/exams', {
         data: {
+          examReference: reference,
           idexam,
           nom,
           date,
           poids: Number(poids),
-        }
+        },
       });
-      alert("✅ Examen mis à jour avec succès !");
+
+      const newExamId = creationRes.data.data.id;
+
+      // 2. Récupérer tous les examens liés à examReference
+      const res = await axios.get(
+        `http://localhost:1337/api/exams?filters[examReference][$eq]=${reference}`
+      );
+      const exams = res.data.data;
+
+      // 3. Supprimer l’examen le plus ancien ≠ nouvellement créé
+      const examToDelete = exams
+        .filter((e: any) => e.id !== newExamId)
+        .sort(
+          (a: any, b: any) =>
+            new Date(a.createdAt).getTime() - new Date(b.createdAt).getTime()
+        )[0];
+
+      if (examToDelete) {
+        await axios.delete(`http://localhost:1337/api/exams/${examToDelete.id}`);
+        console.log("🗑️ Ancien examen supprimé :", examToDelete.id);
+      }
+
+      alert("✅ Examen modifié avec succès !");
       navigate('/examens');
-    } catch (err) {
-      console.error("❌ Erreur lors de la mise à jour :", err);
-      setError("❌ Impossible de mettre à jour l'examen.");
+    } catch (err: any) {
+      console.error("❌ Erreur :", err);
+      setError("❌ Une erreur est survenue : " + (err.response?.data?.error?.message || "Inconnue."));
     }
   };
 
@@ -62,6 +99,7 @@ useEffect(() => {
     <div>
       <h2>✏️ Modifier un examen</h2>
       {error && <p style={{ color: 'red' }}>{error}</p>}
+
       <form onSubmit={handleSubmit}>
         <div>
           <label>ID Examen :</label>
@@ -77,12 +115,13 @@ useEffect(() => {
         </div>
         <div>
           <label>Poids :</label>
-          <input type="number" value={poids} onChange={(e) => setPoids(e.target.value)} />
+          <input type="number" value={poids} onChange={(e) => setPoids(e.target.value)} required />
         </div>
-        <button type="submit">💾 Enregistrer</button>
+        <button type="submit">💾 Remplacer</button>
       </form>
     </div>
   );
 };
 
 export default EditExamen;
+

@@ -1,4 +1,4 @@
-import { createSlice, createAsyncThunk } from '@reduxjs/toolkit';
+ import { createSlice, createAsyncThunk } from '@reduxjs/toolkit';
 import axios from 'axios';
 import { Examen } from '../../types/Examen';
 
@@ -17,25 +17,37 @@ const initialState: ExamenState = {
   error: null,
 };
 
+
+
+
+
+
 export const fetchExamens = createAsyncThunk(
   'examens/fetchExamens',
   async (_, thunkAPI) => {
     try {
       const response = await axios.get('http://localhost:1337/api/exams');
       console.log("✅ Réponse brute Strapi :", response.data);
-return response.data.data.map((item: any) => ({
-  id: item.id,
-  idexam: item.idexam,
-  nom: item.nom,
-  date: new Date(item.date).toLocaleString('fr-FR', {
-    day: '2-digit',
-    month: 'long',
-    year: 'numeric',
-    hour: '2-digit',
-    minute: '2-digit',
-  }),
-  poids: item.poids,
-}));
+
+      return response.data.data.map((item: any) => {
+        // Fallback : si les données ne sont pas à plat, on les prend depuis attributes
+        const data = item.attributes || item;
+
+        return {
+          id: item.id,
+          idexam: data.idexam || '',
+          nom: data.nom || '',
+          date: new Date(data.date).toLocaleString('fr-FR', {
+            day: '2-digit',
+            month: 'long',
+            year: 'numeric',
+            hour: '2-digit',
+            minute: '2-digit',
+          }),
+          poids: data.poids || 0,
+          examReference: data.examReference || null,
+        };
+      });
 
     } catch (error: any) {
       console.error('❌ Erreur API', error.response?.data || error.message);
@@ -45,6 +57,10 @@ return response.data.data.map((item: any) => ({
     }
   }
 );
+
+
+
+
 
 
 

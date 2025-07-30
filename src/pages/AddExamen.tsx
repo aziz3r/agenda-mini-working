@@ -1,35 +1,50 @@
 import { useState } from 'react';
+import { useNavigate } from 'react-router-dom';
 import axios from 'axios';
+import { v4 as uuidv4 } from 'uuid'; // Génération UUID
 
 const AddExamen = () => {
+  const navigate = useNavigate();
+
+  const [idexam, setIdexam] = useState('');
   const [nom, setNom] = useState('');
   const [date, setDate] = useState('');
   const [poids, setPoids] = useState('');
-  const [idexam, setIdexam] = useState('');
+  const [error, setError] = useState<string | null>(null);
 
   const handleSubmit = async (e: React.FormEvent) => {
     e.preventDefault();
 
+    if (!idexam || !nom || !date || isNaN(Number(poids))) {
+      setError("❌ Remplis tous les champs.");
+      return;
+    }
+
+    const examReference = uuidv4(); // 🆕 nom du champ unique
+
     try {
-      const response = await axios.post("http://localhost:1337/api/exams", {
+      await axios.post("http://localhost:1337/api/exams", {
         data: {
+          examReference,
+          idexam,
           nom,
           date,
           poids: Number(poids),
-          idexam,
-        }
+        },
       });
 
-      alert('✅ Examen ajouté avec succès !');
-      console.log(response.data);
-    } catch (error) {
-      console.error('❌ Erreur lors de l’ajout de l’examen :', error);
+      alert("✅ Examen ajouté !");
+      navigate('/examens');
+    } catch (err: any) {
+      console.error("❌ Erreur lors de la création :", err.response?.data || err);
+      setError("❌ Échec de la création.");
     }
   };
 
   return (
     <div>
       <h2>➕ Ajouter un examen</h2>
+      {error && <p style={{ color: 'red' }}>{error}</p>}
       <form onSubmit={handleSubmit}>
         <div>
           <label>ID Examen :</label>
@@ -45,13 +60,15 @@ const AddExamen = () => {
         </div>
         <div>
           <label>Poids :</label>
-          <input type="number" value={poids} onChange={(e) => setPoids(e.target.value)} />
+          <input type="number" value={poids} onChange={(e) => setPoids(e.target.value)} required />
         </div>
-        <button type="submit">Ajouter</button>
+        <button type="submit">✅ Ajouter</button>
       </form>
     </div>
   );
 };
 
 export default AddExamen;
+
+
 
