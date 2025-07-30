@@ -1,14 +1,17 @@
 import { useState } from 'react';
 import { useNavigate } from 'react-router-dom';
 import axios from 'axios';
-import { v4 as uuidv4 } from 'uuid'; // Génération UUID
+import { v4 as uuidv4 } from 'uuid';
+import DatePicker from 'react-datepicker';
+import 'react-datepicker/dist/react-datepicker.css';
+import './AddExamen.css';
 
 const AddExamen = () => {
   const navigate = useNavigate();
 
   const [idexam, setIdexam] = useState('');
   const [nom, setNom] = useState('');
-  const [date, setDate] = useState('');
+  const [date, setDate] = useState<Date | null>(null);
   const [poids, setPoids] = useState('');
   const [error, setError] = useState<string | null>(null);
 
@@ -20,7 +23,7 @@ const AddExamen = () => {
       return;
     }
 
-    const examReference = uuidv4(); // 🆕 nom du champ unique
+    const examReference = uuidv4();
 
     try {
       await axios.post("http://localhost:1337/api/exams", {
@@ -28,7 +31,7 @@ const AddExamen = () => {
           examReference,
           idexam,
           nom,
-          date,
+          date: date.toISOString(),
           poids: Number(poids),
         },
       });
@@ -42,33 +45,43 @@ const AddExamen = () => {
   };
 
   return (
-    <div>
-      <h2>➕ Ajouter un examen</h2>
-      {error && <p style={{ color: 'red' }}>{error}</p>}
-      <form onSubmit={handleSubmit}>
-        <div>
+    <div className="add-container">
+      <h2 className="add-title">➕ Ajouter un examen</h2>
+      {error && <p className="add-error">{error}</p>}
+      <form onSubmit={handleSubmit} className="add-form">
+        <div className="form-group">
           <label>ID Examen :</label>
           <input value={idexam} onChange={(e) => setIdexam(e.target.value)} required />
         </div>
-        <div>
+        <div className="form-group">
           <label>Nom :</label>
           <input value={nom} onChange={(e) => setNom(e.target.value)} required />
         </div>
-        <div>
+        <div className="form-group">
           <label>Date :</label>
-          <input type="datetime-local" value={date} onChange={(e) => setDate(e.target.value)} required />
+          <DatePicker
+            selected={date}
+            onChange={(d) => setDate(d)}
+            showTimeSelect
+            timeFormat="HH:mm"
+            timeIntervals={15}
+            dateFormat="dd/MM/yyyy HH:mm"
+            placeholderText="Sélectionne la date et l'heure"
+            className="custom-datepicker"
+          />
         </div>
-        <div>
+        <div className="form-group">
           <label>Poids :</label>
           <input type="number" value={poids} onChange={(e) => setPoids(e.target.value)} required />
         </div>
-        <button type="submit">✅ Ajouter</button>
+        <button type="submit" className="add-button">✅ Ajouter</button>
       </form>
     </div>
   );
 };
 
 export default AddExamen;
+
 
 
 

@@ -1,8 +1,10 @@
 import { useEffect } from 'react';
 import { useDispatch, useSelector } from 'react-redux';
-import { fetchExamens } from '../features/examens/examenSlice';
-import { RootState, AppDispatch } from '../redux/store';
+import { fetchExamens } from '../../features/examens/examenSlice';
+import { RootState, AppDispatch } from '../../redux/store';
 import { useNavigate } from 'react-router-dom';
+import './Examens.css';
+
 
 const Examens = () => {
   const dispatch = useDispatch<AppDispatch>();

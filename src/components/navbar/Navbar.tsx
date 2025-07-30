@@ -1,15 +1,13 @@
 import React from 'react';
 import { Link } from 'react-router-dom';
+import './navbar.css'; // chemin relatif
 
 const Navbar = () => {
   return (
-    <nav style={{ padding: 20, backgroundColor: '#f0f0f0' }}>
-      <Link to="/" style={{ marginRight: 20 }}>🏠 Accueil</Link>
+    <nav>
+      <Link to="/">🏠 Accueil</Link>
       <Link to="/examens">📝 Examens</Link>
-      <li>
-  <Link to="/ajouter">➕ Ajouter</Link>
-</li>
-
+      <Link to="/ajouter">➕ Ajouter</Link>
     </nav>
   );
 };

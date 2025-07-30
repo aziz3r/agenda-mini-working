@@ -124,4 +124,3 @@ const EditExamen = () => {
 };
 
 export default EditExamen;
-

@@ -1,0 +1,78 @@
+/* AddExamen.css */
+
+body {
+  background-color: #fdf6ec;
+  font-family: 'Segoe UI', sans-serif;
+}
+
+.add-container {
+  max-width: 680px;
+  margin: 80px auto 0;
+  padding: 30px;
+  background-color: #fffaf2;
+  border: 2px solid #e2d3c1;
+  border-radius: 16px;
+  box-shadow: 0 4px 12px rgba(0, 0, 0, 0.05);
+}
+
+.add-title {
+  text-align: center;
+  font-size: 26px;
+  margin-bottom: 24px;
+  color: #5e473d;
+}
+
+.add-error {
+  color: #d9534f;
+  text-align: center;
+  margin-bottom: 10px;
+  font-weight: bold;
+}
+
+.add-form .form-group {
+  margin-bottom: 20px;
+  display: flex;
+  flex-direction: column;
+}
+
+.add-form label {
+  margin-bottom: 8px;
+  font-weight: bold;
+  color: #5e473d;
+}
+
+.add-form input,
+.custom-datepicker {
+  padding: 14px 16px;
+  font-size: 16px;
+  border-radius: 10px;
+  border: 1px solid #d1bfa8;
+  background-color: #fffdf9;
+  width: 100%;
+  box-sizing: border-box;
+}
+
+.custom-datepicker {
+  height: 52px;
+}
+
+.react-datepicker-wrapper {
+  width: 100%;
+}
+
+.add-button {
+  margin-top: 24px;
+  padding: 14px 20px;
+  background-color: #d4a373;
+  border: none;
+  color: white;
+  font-weight: bold;
+  border-radius: 10px;
+  cursor: pointer;
+  font-size: 16px;
+  transition: background-color 0.2s ease;
+}
+
+.add-button:hover {
+  background-color: #b67d4a;
+}

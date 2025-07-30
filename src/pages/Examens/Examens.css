@@ -1,0 +1,65 @@
+/* Examens.css */
+
+body {
+  background-color: #f9f9f9;
+  margin: 0;
+  font-family: 'Segoe UI', sans-serif;
+}
+
+h1 {
+  text-align: center;
+  font-size: 26px;
+  margin: 40px 0 30px;
+  font-weight: bold;
+  color: #2c3e50;
+}
+
+ul {
+  list-style: none;
+  padding: 0;
+  margin: 0 auto;
+  max-width: 900px;
+  display: flex;
+  flex-direction: column;
+  gap: 24px;
+}
+
+li {
+  background-color: #ffffff;
+  border: 1px solid #e0e0e0;
+  border-radius: 12px;
+  padding: 18px 22px;
+  box-shadow: 0 3px 8px rgba(0, 0, 0, 0.06);
+  transition: transform 0.2s;
+}
+
+li:hover {
+  transform: scale(1.01);
+}
+
+li strong {
+  font-size: 17px;
+  color: #34495e;
+  margin-bottom: 10px;
+  display: inline-block;
+}
+
+li br {
+  line-height: 1.4;
+}
+
+button {
+  margin-top: 12px;
+  background-color: #aeb6ba;
+  color: white;
+  border: none;
+  padding: 8px 14px;
+  font-size: 14px;
+  border-radius: 6px;
+  cursor: pointer;
+  transition: background-color 0.2s ease;
+}
+
+button:hover {
+  background-color: #73828b;
+}

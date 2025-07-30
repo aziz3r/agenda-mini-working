@@ -1,0 +1,63 @@
+/* dashboard.css */
+
+.dashboard-container {
+  display: flex;
+  height: 100vh;
+  font-family: sans-serif;
+}
+
+.grid-wrapper {
+  flex: 1;
+  overflow: auto;
+  width: 100%;
+}
+
+.header-row {
+  display: grid;
+  grid-template-columns: 60px repeat(7, 1fr);
+  position: sticky;
+  top: 0;
+  background: white;
+  z-index: 10;
+  border-bottom: 1px solid #ddd;
+}
+
+.header-cell {
+  text-align: center;
+  font-weight: bold;
+  padding: 10px;
+  border-left: 1px solid #ccc;
+}
+
+.time-row {
+  display: grid;
+  grid-template-columns: 60px repeat(7, 1fr);
+  height: 64px; /* équivalent Tailwind h-16 */
+  border-top: 1px solid #ccc;
+}
+
+.time-cell {
+  font-size: 12px;
+  text-align: right;
+  padding-top: 16px;
+  padding-right: 8px;
+}
+
+.grid-cell {
+  position: relative;
+  border-left: 1px solid #eee;
+}
+
+.exam-block {
+  position: absolute;
+  top: 4px;
+  left: 4px;
+  right: 4px;
+  bottom: 4px;
+  background: #3b82f6;
+  color: white;
+  font-size: 12px;
+  padding: 4px;
+  border-radius: 4px;
+  box-shadow: 0 0 4px rgba(0,0,0,0.2);
+}
