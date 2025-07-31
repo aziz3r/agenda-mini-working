@@ -1,23 +1,62 @@
-/* navbar.css */
+/* ===============================
+   === CONTAINER DE LA NAVBAR ===
+   (fond clair sur toute la largeur)
+================================= */
 
-nav {
-  background-color: #e9d8c7; /* beige doux */
+.navbar-container {
+  width: 100%;
+  background-color: #fffaf3;         /* même fond que .navbar */
   display: flex;
   justify-content: center;
-  gap: 40px;
+  padding: 12px 0;
+  box-shadow: 0 2px 6px rgba(0, 0, 0, 0.03);
+}
+
+
+/* ===============================
+   === NAVBAR CENTRÉE ET LIMITÉE ===
+   (la bande contenant <nav>)
+================================= */
+
+.navbar {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  background-color: #fffaf3;
+  padding: 10px 20px;
+  max-width: 900px;                  /* limite la largeur */
+  width: 100%;
+}
+
+
+/* ===============================
+   === NAV CONTENU ARRONDI ===
+   (les boutons eux-mêmes)
+================================= */
+
+nav {
+  background-color: #e9d8c7;         /* beige doux */
+  display: flex;
+  justify-content: center;
+  gap: 24px;                         /* espace entre les boutons */
   padding: 12px 24px;
-  border-radius: 999px; /* super arrondi */
+  border-radius: 999px;              /* super arrondi */
   box-shadow: 0 2px 6px rgba(0, 0, 0, 0.05);
   max-width: max-content;
-  margin: 24px auto; /* centré horizontalement */
+  margin: 0 auto;                    /* centré à l'intérieur de .navbar */
 }
+
+
+/* ===============================
+   === LIENS DANS NAV ARRONDI ===
+================================= */
 
 nav a {
   display: flex;
   align-items: center;
   gap: 8px;
   text-decoration: none;
-  color: #4b3c2b; /* brun doux */
+  color: #4b3c2b;
   font-weight: 500;
   font-size: 16px;
   transition: transform 0.2s ease, color 0.2s ease;
@@ -26,4 +65,35 @@ nav a {
 nav a:hover {
   color: #2e1f12;
   transform: translateY(-1px);
+}
+
+
+/* ===============================
+   === BOUTON "Toggle Sidebar" ===
+================================= */
+
+.toggle-sidebar-btn {
+  background: none;
+  border: none;
+  outline: none;
+  box-shadow: none;
+  padding: 0;
+  margin: 0;
+  font: inherit;
+  color: #4b3c2b;
+  font-weight: 500;
+  font-size: 16px;
+  display: flex;
+  align-items: center;
+  gap: 8px;
+  cursor: pointer;
+  transition: transform 0.2s ease;
+  -webkit-appearance: none; /* désactive le style par défaut (Safari/macOS) */
+  appearance: none;         /* désactive le style par défaut (tous navigateurs) */
+}
+
+.toggle-sidebar-btn:hover {
+  transform: translateY(-1px); /* effet subtil comme les autres liens */
+  background: none !important; /* empêche tout fond bleu */
+  color: #4b3c2b !important;   /* empêche changement de texte */
 }

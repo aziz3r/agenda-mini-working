@@ -1,23 +1,28 @@
 /* src/layout/MainLayout.css */
 
-.main-layout {
+.layout-container {
   display: flex;
+  flex-direction: column;
   height: 100vh;
-  overflow: hidden;
 }
 
 .main-content {
-  flex: 1; /* Le calendrier prend toute la largeur restante */
-  transition: all 0.3s ease;
-  padding-right: 10px;
-  overflow-x: auto;
+  display: flex;
+  flex: 1;
+  overflow: hidden;
+}
+
+.page-content {
+  flex: 1;
+  overflow: auto;
+  padding: 1rem;
 }
 
 .sidebar {
-  width: 280px; /* Largeur fixe de la sidebar */
-  background-color: #f9f1e8;
-  padding: 16px;
+  width: 280px;
+  background-color: #fef6e4;
   border-left: 2px dashed #ccc;
-  box-shadow: -3px 0 5px rgba(0, 0, 0, 0.05);
+  padding: 1rem;
+  box-sizing: border-box;
   overflow-y: auto;
 }

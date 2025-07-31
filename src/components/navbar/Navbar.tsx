@@ -1,14 +1,25 @@
-import React from 'react';
+import { useSidebar } from '../../context/SidebarContext';
+import './navbar.css';
 import { Link } from 'react-router-dom';
-import './navbar.css'; // chemin relatif
 
 const Navbar = () => {
+  const { toggleSidebar } = useSidebar();
+
   return (
-    <nav>
-      <Link to="/">🏠 Accueil</Link>
-      <Link to="/examens">📝 Examens</Link>
-      <Link to="/ajouter">➕ Ajouter</Link>
-    </nav>
+    <div className="navbar-container">
+      <div className="navbar">
+        <nav>
+          <Link to="/">🏠 Accueil</Link>
+          <Link to="/examens">📝 Examens</Link>
+          <Link to="/ajouter">➕ Ajouter</Link>
+
+          {/* Bouton Sidebar stylisé comme un lien */}
+          <button className="toggle-sidebar-btn" onClick={toggleSidebar}>
+            📅 To Do list
+          </button>
+        </nav>
+      </div>
+    </div>
   );
 };
 
