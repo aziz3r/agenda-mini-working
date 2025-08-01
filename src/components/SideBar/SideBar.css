@@ -3,7 +3,7 @@
   height: 100%;
   padding: 16px;
   box-sizing: border-box;
-  background-color: #fffaf3; /* Assure la cohérence avec le fond global */
+  background-color: #f7f2ef; /* Assure la cohérence avec le fond global */
   overflow-y: auto;
 }
 
@@ -28,7 +28,7 @@
 .input-group input {
   flex: 1;
   padding: 8px 12px;
-  border: 1px solid #d6c0a8;
+  border: 1px solid #70491f;;
   border-radius: 6px;
   font-size: 14px;
   outline: none;
