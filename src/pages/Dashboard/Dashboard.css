@@ -1,130 +1,76 @@
-/* ===============================
-   === CONTENEUR PRINCIPAL ===
-================================= */
-
-.dashboard-container {
+.dashboard-root {
   display: flex;
-  width: 100vw;
   height: 100vh;
+  width: 100%;
   overflow: hidden;
-  background-color: #fffaf3;
 }
 
-/* ===============================
-   === GRILLE DE CALENDRIER ===
-================================= */
-
-.grid-wrapper {
+.dashboard-main {
   flex: 1;
   overflow: auto;
-  min-width: 0;
-  padding: 20px;
-  background-color: #9d968d;
+  padding: 16px;
+  background-color: #fef6ec;
 }
 
-.grid-wrapper::-webkit-scrollbar {
-  width: 8px;
-}
-.grid-wrapper::-webkit-scrollbar-thumb {
-  background: #1c1b1b;
-  border-radius: 4px;
-}
-
-
-/* ===============================
-   === SIDEBAR À DROITE ===
-================================= */
-
-.sidebar {
+.dashboard-sidebar {
   width: 300px;
-  background-color: #fff4db;
-  border-left: 1px solid #ddd;
+  min-width: 280px;
+  background-color: #fff2d8;
+  border-left: 1px solid #e0d6c5;
   padding: 16px;
   overflow-y: auto;
-  flex-shrink: 0;
-  box-shadow: -2px 0 4px rgba(0, 0, 0, 0.05);
 }
 
+.grid-wrapper {
+  width: 100%;
+  overflow: auto;
+}
 
-/* ===============================
-   === EN-TÊTE (JOURS) ===
-================================= */
+.grid-inner {
+  width: 100%;
+}
 
 .header-row {
   display: grid;
   grid-template-columns: 60px repeat(7, 1fr);
+  background: #eaf6f6;
+  position: sticky;
   top: 0;
-  background-color: #eafafc;
-  border: 1px solid #ccc;
-  z-index: 10;
+  z-index: 2;
+  border-bottom: 1px solid #ccc;
 }
 
 .header-cell {
   text-align: center;
+  padding: 8px;
   font-weight: bold;
-  font-size: 14px;
-  padding: 12px 8px;
-  border-left: 1px solid #ccc;
-  border-bottom: 1px solid #ccc;
-  background-color: #6a707187;
+  border-left: 1px solid #ddd;
 }
-
-
-/* ===============================
-   === LIGNES HORAIRES ===
-================================= */
 
 .time-row {
   display: grid;
   grid-template-columns: 60px repeat(7, 1fr);
   height: 64px;
-  border-bottom: 1px solid #ddd;
+  border-top: 1px solid #ddd;
 }
-
-
-/* ===============================
-   === HEURES À GAUCHE ===
-================================= */
 
 .time-cell {
+  text-align: right;
+  padding: 16px 8px;
   font-size: 12px;
-  text-align: center;
-  padding-top: 20px;
-  background-color: #f4f4f4;
-  border-right: 1px solid #ccc;
-  font-weight: 500;
+  color: #444;
 }
-
-
-/* ===============================
-   === CELLULES DU PLANNING ===
-================================= */
 
 .grid-cell {
   position: relative;
-  background-color: #ffffff;
-  border-left: 1px solid #ddd;
-  border-right: 1px solid #ddd;
-  border-top: 1px solid #eee;
+  border-left: 1px solid #eee;
 }
-
-
-/* ===============================
-   === BLOCS D’EXAMENS ===
-================================= */
 
 .exam-block {
   position: absolute;
-  top: 4px;
-  left: 4px;
-  right: 4px;
-  bottom: 4px;
-  background-color: #ffbaba;
-  color: #5a1a1a;
-  font-size: 13px;
-  font-weight: bold;
-  padding: 6px;
-  border-radius: 8px;
-  text-align: center;
-  box-shadow: 1px 1px 5px rgba(0, 0, 0, 0.1);
+  background-color: #fcd5ce;
+  padding: 4px;
+  border-radius: 4px;
+  font-size: 12px;
+  color: #333;
 }

@@ -1,19 +1,22 @@
+/* App.css */
+
 .layout-container {
   display: flex;
-  height: calc(100vh - 80px);
-  transition: all 0.3s ease-in-out;
+  width: 100%;
+  height: 100vh;
 }
 
 .sidebar-open .main-content {
-  width: calc(100% - 280px); /* largeur de la sidebar */
+  flex: 1;
+  overflow-y: auto;
 }
 
 .sidebar-closed .main-content {
   width: 100%;
+  overflow-y: auto;
 }
 
 .main-content {
-  transition: width 0.3s ease-in-out;
   padding: 20px;
-  height: 100%;
+  background-color: #fffaf5;
 }

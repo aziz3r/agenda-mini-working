@@ -1,18 +1,19 @@
-import React, { createContext, useContext, useState } from 'react';
+import React, { createContext, useContext, useState, ReactNode } from 'react';
 
+// 1. Interface du contexte
 interface SidebarContextType {
   isOpen: boolean;
   toggleSidebar: () => void;
 }
 
+// 2. Création du contexte
 const SidebarContext = createContext<SidebarContextType | undefined>(undefined);
 
-export const SidebarProvider: React.FC<{ children: React.ReactNode }> = ({ children }) => {
-  const [isOpen, setIsOpen] = useState(true);
+// 3. Provider
+export const SidebarProvider = ({ children }: { children: ReactNode }) => {
+  const [isOpen, setIsOpen] = useState<boolean>(true);
 
-  const toggleSidebar = () => {
-    setIsOpen(prev => !prev);
-  };
+  const toggleSidebar = () => setIsOpen(prev => !prev);
 
   return (
     <SidebarContext.Provider value={{ isOpen, toggleSidebar }}>
@@ -21,8 +22,11 @@ export const SidebarProvider: React.FC<{ children: React.ReactNode }> = ({ child
   );
 };
 
-export const useSidebar = () => {
+// 4. Hook personnalisé pour utiliser le contexte
+export const useSidebar = (): SidebarContextType => {
   const context = useContext(SidebarContext);
-  if (!context) throw new Error('useSidebar must be used within a SidebarProvider');
+  if (context === undefined) {
+    throw new Error('❌ useSidebar must be used within a <SidebarProvider>');
+  }
   return context;
 };

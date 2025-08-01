@@ -6,11 +6,17 @@ const MainLayout = ({ children }: { children: React.ReactNode }) => {
   const { isOpen } = useSidebar();
 
   return (
-    <div className="main-layout">
-      <div className="main-content" style={{ marginRight: isOpen ? '250px' : '0' }}>
-        {children}
+    <div className="layout-container">
+      <div className="main-content">
+        <div className={`page-content ${isOpen ? 'with-sidebar' : ''}`}>
+          {children}
+        </div>
+        {isOpen && (
+          <div className="sidebar">
+            <Sidebar />
+          </div>
+        )}
       </div>
-      {isOpen && <Sidebar />}
     </div>
   );
 };

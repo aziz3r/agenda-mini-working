@@ -1,9 +1,9 @@
-/* src/layout/MainLayout.css */
-
 .layout-container {
   display: flex;
   flex-direction: column;
   height: 100vh;
+  width: 100%;
+  background-color: #fef9f2;
 }
 
 .main-content {
@@ -14,15 +14,27 @@
 
 .page-content {
   flex: 1;
-  overflow: auto;
-  padding: 1rem;
+  padding: 2rem;
+  display: flex;
+  justify-content: center;    /* ✅ centre horizontalement */
+  align-items: center;        /* ✅ centre verticalement */
+  overflow-y: auto;
+  box-sizing: border-box;
+  min-height: calc(100vh - 80px); /* ✅ s'étend pour permettre centrage (ajuste selon ta navbar) */
+}
+
+/* Réserve de l’espace quand sidebar est visible */
+.page-content.with-sidebar {
+  margin-right: 280px;
 }
 
 .sidebar {
   width: 280px;
-  background-color: #fef6e4;
-  border-left: 2px dashed #ccc;
-  padding: 1rem;
+  background-color: #fffaf2;
+  border-left: 2px dashed #e6d5c3;
+  padding: 20px;
   box-sizing: border-box;
   overflow-y: auto;
+  height: 100%;
+  box-shadow: -2px 0 8px rgba(0, 0, 0, 0.05);
 }

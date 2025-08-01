@@ -4,10 +4,13 @@ import axios from 'axios';
 import { v4 as uuidv4 } from 'uuid';
 import DatePicker from 'react-datepicker';
 import 'react-datepicker/dist/react-datepicker.css';
+import { useSidebar } from '../../context/SidebarContext';
+import Sidebar from '../../components/SideBar/SideBar';
 import './AddExamen.css';
 
 const AddExamen = () => {
   const navigate = useNavigate();
+  const { isOpen: isSidebarOpen } = useSidebar();
 
   const [idexam, setIdexam] = useState('');
   const [nom, setNom] = useState('');
@@ -45,43 +48,50 @@ const AddExamen = () => {
   };
 
   return (
-    <div className="add-container">
-      <h2 className="add-title">➕ Ajouter un examen</h2>
-      {error && <p className="add-error">{error}</p>}
-      <form onSubmit={handleSubmit} className="add-form">
-        <div className="form-group">
-          <label>ID Examen :</label>
-          <input value={idexam} onChange={(e) => setIdexam(e.target.value)} required />
+    <div className="add-root">
+      <div className="add-main">
+        <div className="add-container">
+          <h2 className="add-title">➕ Ajouter un examen</h2>
+          {error && <p className="add-error">{error}</p>}
+          <form onSubmit={handleSubmit} className="add-form">
+            <div className="form-group">
+              <label>ID Examen :</label>
+              <input value={idexam} onChange={(e) => setIdexam(e.target.value)} required />
+            </div>
+            <div className="form-group">
+              <label>Nom :</label>
+              <input value={nom} onChange={(e) => setNom(e.target.value)} required />
+            </div>
+            <div className="form-group">
+              <label>Date :</label>
+              <DatePicker
+                selected={date}
+                onChange={(d) => setDate(d)}
+                showTimeSelect
+                timeFormat="HH:mm"
+                timeIntervals={15}
+                dateFormat="dd/MM/yyyy HH:mm"
+                placeholderText="Sélectionne la date et l'heure"
+                className="custom-datepicker"
+              />
+            </div>
+            <div className="form-group">
+              <label>Poids :</label>
+              <input type="number" value={poids} onChange={(e) => setPoids(e.target.value)} required />
+            </div>
+            <button type="submit" className="add-button">✅ Ajouter</button>
+          </form>
         </div>
-        <div className="form-group">
-          <label>Nom :</label>
-          <input value={nom} onChange={(e) => setNom(e.target.value)} required />
-        </div>
-        <div className="form-group">
-          <label>Date :</label>
-          <DatePicker
-            selected={date}
-            onChange={(d) => setDate(d)}
-            showTimeSelect
-            timeFormat="HH:mm"
-            timeIntervals={15}
-            dateFormat="dd/MM/yyyy HH:mm"
-            placeholderText="Sélectionne la date et l'heure"
-            className="custom-datepicker"
-          />
-        </div>
-        <div className="form-group">
-          <label>Poids :</label>
-          <input type="number" value={poids} onChange={(e) => setPoids(e.target.value)} required />
-        </div>
-        <button type="submit" className="add-button">✅ Ajouter</button>
-      </form>
+      </div>
+
+      {isSidebarOpen && (
+        <aside className="add-sidebar">
+          <Sidebar />
+        </aside>
+      )}
     </div>
   );
 };
 
 export default AddExamen;
-
-
-
 
