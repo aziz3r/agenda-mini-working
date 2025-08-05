@@ -1,20 +1,33 @@
-import React, { useState } from 'react';
+import React, { useEffect, useState } from 'react';
 import './Sidebar.css';
+import { useDispatch, useSelector } from 'react-redux';
+import { fetchRemarques, addRemarque, deleteRemarque } from '../../features/remarques/remarquesSlice';
+import { AppDispatch, RootState } from '../../redux/store';
 
 const Sidebar = () => {
   const [remarque, setRemarque] = useState('');
-  const [remarques, setRemarques] = useState<string[]>([]);
+  const dispatch = useDispatch<AppDispatch>();
+  const { remarques, loading, error } = useSelector((state: RootState) => state.remarques);
+
+  useEffect(() => {
+    dispatch(fetchRemarques());
+  }, [dispatch]);
 
   const handleAdd = () => {
     if (remarque.trim() !== '') {
-      setRemarques([...remarques, remarque.trim()]);
+      console.log('🟨 Envoi remarque :', remarque);
+      dispatch(addRemarque(remarque.trim()));
       setRemarque('');
     }
   };
 
-  const handleRemove = (indexToRemove: number) => {
-    setRemarques(remarques.filter((_, index) => index !== indexToRemove));
+  const handleRemove = (id: number) => {
+    dispatch(deleteRemarque(id));
   };
+
+  useEffect(() => {
+    console.log('📌 Données remarques Redux:', remarques);
+  }, [remarques]);
 
   return (
     <div className="sidebar">
@@ -28,15 +41,14 @@ const Sidebar = () => {
         />
         <button onClick={handleAdd}>➕</button>
       </div>
+      {loading && <p>Chargement...</p>}
+      {error && <p className="error-message">Erreur : {error}</p>}
       <ul className="remarques-list">
-        {remarques.map((item, index) => (
-          <li key={index}>
+        {remarques.map((item) => (
+          <li key={item.id}>
             <label>
-              <input
-                type="checkbox"
-                onChange={() => handleRemove(index)}
-              />
-              <span>{item}</span>
+              <input type="checkbox" onChange={() => handleRemove(item.id)} />
+              <span>{item.texte}</span>
             </label>
           </li>
         ))}

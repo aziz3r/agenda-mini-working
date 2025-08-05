@@ -3,11 +3,12 @@
   height: 100%;
   padding: 16px;
   box-sizing: border-box;
-  background-color: #f7f2ef; /* Assure la cohérence avec le fond global */
+  background-color: #e3d2c9; /* Fond doux et neutre */
   overflow-y: auto;
+  border-right: 1px solid #c4b1a6;
 }
 
-/* Titre de section */
+/* Titre */
 .sidebar-title {
   font-size: 20px;
   margin-bottom: 20px;
@@ -28,7 +29,7 @@
 .input-group input {
   flex: 1;
   padding: 8px 12px;
-  border: 1px solid #70491f;;
+  border: 1px solid #70491f;
   border-radius: 6px;
   font-size: 14px;
   outline: none;
@@ -41,20 +42,20 @@
 
 .input-group button {
   padding: 8px 12px;
-  border: none;
-  background-color: #d4a373;
+  background-color: #9e5a2d;
   color: white;
-  font-weight: bold;
+  border: none;
   border-radius: 6px;
+  font-size: 14px;
   cursor: pointer;
-  transition: background-color 0.3s;
+  transition: background-color 0.2s;
 }
 
 .input-group button:hover {
-  background-color: #bc8654;
+  background-color: #c3723a;
 }
 
-/* Liste de remarques */
+/* Liste des remarques */
 .remarques-list {
   list-style: none;
   padding: 0;
@@ -62,21 +63,20 @@
 }
 
 .remarques-list li {
-  margin-bottom: 12px;
-  background-color: #f9ede3;
-  border-left: 4px solid #d4a373;
-  padding: 8px 12px;
-  border-radius: 4px;
-  color: #333;
-  font-size: 14px;
+  display: flex;
+  align-items: center;
+  margin-bottom: 10px;
 }
 
-/* Pour label stylisé */
 .remarques-list label {
   display: flex;
   align-items: center;
-  gap: 10px;
-  cursor: pointer;
-  color: #333;
   font-size: 14px;
+  gap: 8px;
+  cursor: pointer;
+}
+
+.remarques-list input[type="checkbox"] {
+  accent-color: #5e473d; /* couleur des checkbox */
+  transform: scale(1.1);
 }
