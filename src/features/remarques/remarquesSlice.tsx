@@ -1,10 +1,6 @@
 import { createSlice, createAsyncThunk } from '@reduxjs/toolkit';
 import axios from 'axios';
-
-interface Remarque {
-  id: number;
-  texte: string;
-}
+import { Remarque } from '../../types/remarque';
 
 interface RemarqueState {
   remarques: Remarque[];
@@ -18,61 +14,55 @@ const initialState: RemarqueState = {
   error: null,
 };
 
+// 🔁 GET all remarques
 export const fetchRemarques = createAsyncThunk(
   'remarques/fetchRemarques',
   async (_, thunkAPI) => {
     try {
       const response = await axios.get('http://localhost:1337/api/remarques');
+      console.log("✅ Réponse brute GET remarques :", response.data);
+
       return response.data.data.map((item: any) => {
-        const data = item.attributes || item;
+        const remarque = item.remarque || item.remarque?.remarque || item?.data?.remarque || item?.remarqueText;
+
         return {
           id: item.id,
-          texte: data.texte || '',
+          remarque: item.remarque || item.remarqueText || item?.remarque, // adapte si besoin
         };
       });
     } catch (error: any) {
-      console.error('❌ Erreur API', error.response?.data || error.message);
-      return thunkAPI.rejectWithValue(
-        error.response?.data?.error?.message || 'Erreur de récupération des remarques'
-      );
+      console.error("❌ Erreur GET remarques :", error.response?.data || error.message);
+      return thunkAPI.rejectWithValue("❌ Échec du chargement des remarques.");
     }
   }
 );
 
+// ➕ POST une remarque
 export const addRemarque = createAsyncThunk(
   'remarques/addRemarque',
   async (texte: string, thunkAPI) => {
     try {
-      const response = await axios.post('http://localhost:1337/api/remarques', {
-        data: { texte },
-      });
-
-      console.log('✅ Réponse API :', response.data);
+      const response = await axios.post(
+        'http://localhost:1337/api/remarques',
+        {
+          data: {
+            remarque: texte,
+          },
+        },
+        {
+          headers: {
+            'Content-Type': 'application/json',
+          },
+        }
+      );
 
       return {
         id: response.data.data.id,
-        texte: response.data.data.attributes.texte,
+        remarque: response.data.data.attributes.remarque,
       };
     } catch (error: any) {
-      console.error('❌ Erreur lors de l\'ajout', error.response?.data || error.message);
-      return thunkAPI.rejectWithValue(
-        error.response?.data?.error?.message || "Erreur lors de l'ajout"
-      );
-    }
-  }
-);
-
-export const deleteRemarque = createAsyncThunk(
-  'remarques/deleteRemarque',
-  async (id: number, thunkAPI) => {
-    try {
-      await axios.delete(`http://localhost:1337/api/remarques/${id}`);
-      return id;
-    } catch (error: any) {
-      console.error('❌ Erreur API', error.response?.data || error.message);
-      return thunkAPI.rejectWithValue(
-        error.response?.data?.error?.message || 'Erreur de suppression'
-      );
+      console.error("Erreur Strapi POST :", error.response?.data || error.message);
+      return thunkAPI.rejectWithValue("❌ Échec de l'ajout de la remarque.");
     }
   }
 );
@@ -97,9 +87,10 @@ const remarquesSlice = createSlice({
       })
       .addCase(addRemarque.fulfilled, (state, action) => {
         state.remarques.push(action.payload);
+        state.error = null;
       })
-      .addCase(deleteRemarque.fulfilled, (state, action) => {
-        state.remarques = state.remarques.filter((r) => r.id !== action.payload);
+      .addCase(addRemarque.rejected, (state, action) => {
+        state.error = action.payload as string;
       });
   },
 });

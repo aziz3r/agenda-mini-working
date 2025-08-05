@@ -1,29 +1,24 @@
 .sidebar {
-  width: 100%;
-  height: 100%;
+  background-color: #e3d2c9;
   padding: 16px;
-  box-sizing: border-box;
-  background-color: #e3d2c9; /* Fond doux et neutre */
-  overflow-y: auto;
-  border-right: 1px solid #c4b1a6;
+  border-radius: 10px;
+  width: 100%;
 }
 
-/* Titre */
 .sidebar-title {
   font-size: 20px;
-  margin-bottom: 20px;
   font-weight: bold;
+  margin-bottom: 12px;
   color: #5e473d;
   display: flex;
   align-items: center;
   gap: 8px;
 }
 
-/* Groupe input + bouton */
 .input-group {
   display: flex;
   gap: 8px;
-  margin-bottom: 20px;
+  margin-bottom: 16px;
 }
 
 .input-group input {
@@ -32,51 +27,13 @@
   border: 1px solid #70491f;
   border-radius: 6px;
   font-size: 14px;
-  outline: none;
-  transition: border-color 0.2s;
-}
-
-.input-group input:focus {
-  border-color: #d4a373;
 }
 
 .input-group button {
   padding: 8px 12px;
-  background-color: #9e5a2d;
-  color: white;
   border: none;
+  background-color: #9a5c32;
+  color: white;
   border-radius: 6px;
-  font-size: 14px;
   cursor: pointer;
-  transition: background-color 0.2s;
-}
-
-.input-group button:hover {
-  background-color: #c3723a;
-}
-
-/* Liste des remarques */
-.remarques-list {
-  list-style: none;
-  padding: 0;
-  margin: 0;
-}
-
-.remarques-list li {
-  display: flex;
-  align-items: center;
-  margin-bottom: 10px;
-}
-
-.remarques-list label {
-  display: flex;
-  align-items: center;
-  font-size: 14px;
-  gap: 8px;
-  cursor: pointer;
-}
-
-.remarques-list input[type="checkbox"] {
-  accent-color: #5e473d; /* couleur des checkbox */
-  transform: scale(1.1);
 }
