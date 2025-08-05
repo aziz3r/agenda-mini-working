@@ -1,7 +1,11 @@
 import React, { useEffect, useState } from 'react';
 import { useDispatch, useSelector } from 'react-redux';
 import { AppDispatch, RootState } from '../../redux/store';
-import { addRemarque, fetchRemarques } from '../../features/remarques/remarquesSlice';
+import {
+  addRemarque,
+  fetchRemarques,
+  deleteRemarque,
+} from '../../features/remarques/remarquesSlice';
 import './SideBar.css';
 
 const SideBar = () => {
@@ -17,9 +21,15 @@ const SideBar = () => {
     if (texte.trim()) {
       await dispatch(addRemarque(texte));
       setTexte('');
-      dispatch(fetchRemarques()); // 🟢 recharge après ajout
+      await dispatch(fetchRemarques()); // Recharge après ajout
     }
   };
+
+const handleDelete = async (id: number) => {
+  await dispatch(deleteRemarque(id));
+  await dispatch(fetchRemarques()); // Recharge les remarques après suppression
+};
+
 
   return (
     <div className="sidebar">
@@ -37,11 +47,19 @@ const SideBar = () => {
 
       {error && <p style={{ color: 'red' }}>❌ {error}</p>}
 
-      <ul>
-        {remarques.map((r) => (
-          <li key={r.id}>✅ {r.remarque}</li>
-        ))}
-      </ul>
+<ul>
+  {remarques.map((r) => (
+    <li key={r.id}>
+      <input
+        type="checkbox"
+        onChange={() => handleDelete(r.id)} // 🔥 Supprime la remarque au clic
+        style={{ marginRight: '8px' }}
+      />
+      ✅ {r.remarque}
+    </li>
+  ))}
+</ul>
+
     </div>
   );
 };

@@ -37,6 +37,19 @@ export const fetchRemarques = createAsyncThunk(
   }
 );
 
+
+
+// 🗑️ DELETE une remarque
+export const deleteRemarque = createAsyncThunk(
+  'remarques/deleteRemarque',
+  async (id: number) => {
+    await axios.delete(`http://localhost:1337/api/remarques/${id}`);
+    return id;
+  }
+);
+
+
+
 // ➕ POST une remarque
 export const addRemarque = createAsyncThunk(
   'remarques/addRemarque',
@@ -89,6 +102,10 @@ const remarquesSlice = createSlice({
         state.remarques.push(action.payload);
         state.error = null;
       })
+      .addCase(deleteRemarque.fulfilled, (state, action) => {
+  state.remarques = state.remarques.filter((r) => r.id !== action.payload);
+})
+
       .addCase(addRemarque.rejected, (state, action) => {
         state.error = action.payload as string;
       });
