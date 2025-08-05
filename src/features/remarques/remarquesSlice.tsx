@@ -69,10 +69,11 @@ export const addRemarque = createAsyncThunk(
         }
       );
 
-      return {
-        id: response.data.data.id,
-        remarque: response.data.data.attributes.remarque,
-      };
+return {
+  id: response.data.data.id,
+  remarque: response.data.data.remarque, // ✅ Pas de .attributes ici
+};
+
     } catch (error: any) {
       console.error("Erreur Strapi POST :", error.response?.data || error.message);
       return thunkAPI.rejectWithValue("❌ Échec de l'ajout de la remarque.");
