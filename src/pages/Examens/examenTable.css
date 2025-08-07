@@ -1,47 +1,102 @@
-.custom-pagination {
-  margin-top: 24px;
+/* 🌐 Fond global */
+.examens-table-root {
+  display: flex;
+  min-height: 100vh;
+  background-color: #fdf6ec; /* même beige que la page d'ajout */
+}
+
+/* 📦 Contenu principal centré */
+.examens-table-main {
+  flex: 1;
   display: flex;
   justify-content: center;
-  align-items: center;
-  gap: 16px;
+  padding: 40px 20px;
+  box-sizing: border-box;
 }
 
-.custom-pagination button {
-  background-color: #c69a6d;
-  color: white;
-  border: none;
-  padding: 8px 16px;
-  border-radius: 8px;
-  cursor: pointer;
-  font-weight: bold;
-  transition: background-color 0.2s ease;
-  box-shadow: 2px 2px 4px rgba(0, 0, 0, 0.1);
-}
-
-.custom-pagination button:hover:not(:disabled) {
-  background-color: #a87d54;
-}
-
-.custom-pagination button:disabled {
-  opacity: 0.5;
-  cursor: not-allowed;
-}
-
-.custom-pagination span {
-  font-weight: 500;
-  color: #5e473d;
-  font-size: 16px;
-}
-
-.custom-table {
+/* 🧾 Bloc principal */
+.examens-table-main .p-4 {
   width: 100%;
+  max-width: 1200px;
+  background-color: #fffdfb;
+  border-radius: 12px;
+  padding: 30px;
+  box-shadow: 0 6px 18px rgba(0, 0, 0, 0.08);
+}
+
+/* 📋 Titre */
+.examens-table-main h2 {
+  font-size: 22px;
+  font-weight: bold;
+  color: #43362f;
+  margin-bottom: 24px;
+  display: flex;
+  align-items: center;
+  gap: 10px;
+}
+
+/* 📊 Tableau */
+.custom-table {
   border-collapse: collapse;
-  text-align: center;
+  width: 100%;
+  background-color: white;
+  margin-bottom: 24px;
+  border-radius: 8px;
+  overflow: hidden;
 }
 
 .custom-table th,
 .custom-table td {
+  border: 1px solid #e0d6cd;
+  padding: 14px;
   text-align: center;
-  vertical-align: middle;
-  padding: 12px;
+  font-size: 15px;
+}
+
+.custom-table thead {
+  background-color: #f4f0ed;
+}
+
+.custom-table th {
+  color: #2d2a27;
+  font-weight: 600;
+}
+
+/* 🔢 Pagination */
+.custom-pagination {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  gap: 16px;
+  margin-top: 16px;
+}
+
+.custom-pagination button {
+  background-color: #d3a47a;
+  color: white;
+  padding: 8px 16px;
+  border: none;
+  border-radius: 6px;
+  cursor: pointer;
+  font-weight: 600;
+  transition: background-color 0.2s ease;
+}
+
+.custom-pagination button:disabled {
+  background-color: #e0d6cd;
+  cursor: not-allowed;
+  color: #aaa;
+}
+
+.custom-pagination span {
+  font-weight: 500;
+  color: #3e322a;
+}
+
+/* 📚 Sidebar */
+.examens-table-sidebar {
+  width: 320px;
+  background-color: #efe2d3;
+  padding: 20px;
+  border-left: 2px solid #d4c2ae;
 }
