@@ -32,3 +32,16 @@
   color: #5e473d;
   font-size: 16px;
 }
+
+.custom-table {
+  width: 100%;
+  border-collapse: collapse;
+  text-align: center;
+}
+
+.custom-table th,
+.custom-table td {
+  text-align: center;
+  vertical-align: middle;
+  padding: 12px;
+}

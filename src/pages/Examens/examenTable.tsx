@@ -1,10 +1,14 @@
-// src/pages/Examens/ExamensTable.tsx
-
 import React, { useEffect, useState } from 'react';
 import { useDispatch, useSelector } from 'react-redux';
 import { AppDispatch, RootState } from '../../redux/store';
 import { fetchExamens } from '../../features/examens/examenSlice';
 import './examenTable.css';
+import dayjs from 'dayjs';
+import customParseFormat from 'dayjs/plugin/customParseFormat';
+import 'dayjs/locale/fr';
+
+dayjs.extend(customParseFormat);
+dayjs.locale('fr');
 
 
 const ITEMS_PER_PAGE = 5;
@@ -31,9 +35,9 @@ const ExamensTable = () => {
 
       {!loading && !error && (
         <>
-          <table className="w-full border">
+          <table className="w-full border custom-table">
             <thead>
-              <tr className="bg-gray-100 text-left">
+              <tr className="bg-gray-100 text-center">
                 <th className="p-2 border">#</th>
                 <th className="p-2 border">ID Examen</th>
                 <th className="p-2 border">Nom</th>
@@ -43,11 +47,25 @@ const ExamensTable = () => {
             </thead>
             <tbody>
               {currentItems.map((exam, index) => (
-                <tr key={exam.id}>
-                  <td className="p-2 border">{(currentPage - 1) * ITEMS_PER_PAGE + index + 1}</td>
+                <tr key={exam.id} className="text-center">
+                  <td className="p-2 border">
+                    {(currentPage - 1) * ITEMS_PER_PAGE + index + 1}
+                  </td>
                   <td className="p-2 border">{exam.idexam}</td>
                   <td className="p-2 border">{exam.nom}</td>
-                  <td className="p-2 border">{new Date(exam.date).toLocaleDateString()}</td>
+<td className="p-2 border">
+  {(() => {
+    const rawDate = exam.date;
+    if (!rawDate) return "Date invalide";
+
+    const parsed = dayjs(rawDate, "DD MMMM YYYY à HH:mm"); // format exact reçu
+    if (!parsed.isValid()) return "Date invalide";
+
+    return parsed.format("DD/MM/YYYY à HH:mm");
+  })()}
+</td>
+
+
                   <td className="p-2 border">{exam.poids}</td>
                 </tr>
               ))}
@@ -55,25 +73,23 @@ const ExamensTable = () => {
           </table>
 
           {/* Pagination */}
-        <div className="custom-pagination">
-  <button
-    onClick={() => setCurrentPage((prev) => Math.max(prev - 1, 1))}
-    disabled={currentPage === 1}
-  >
-    ◀️ Précédent
-  </button>
+          <div className="custom-pagination">
+            <button
+              onClick={() => setCurrentPage((prev) => Math.max(prev - 1, 1))}
+              disabled={currentPage === 1}
+            >
+              ◀️ Précédent
+            </button>
 
-  <span>Page {currentPage} / {totalPages}</span>
+            <span>Page {currentPage} / {totalPages}</span>
 
-  <button
-    onClick={() => setCurrentPage((prev) => Math.min(prev + 1, totalPages))}
-    disabled={currentPage === totalPages}
-  >
-    Suivant ▶️
-  </button>
-</div>
-
-
+            <button
+              onClick={() => setCurrentPage((prev) => Math.min(prev + 1, totalPages))}
+              disabled={currentPage === totalPages}
+            >
+              Suivant ▶️
+            </button>
+          </div>
         </>
       )}
     </div>
